@@ -241,7 +241,7 @@ h1, h2, h3, .logo-text {
   padding: 40px;
   text-align: center;
 }
-#herodr {
+.herodr {
     width: 350px;
     height: 350px;
     border-radius: 50%;
