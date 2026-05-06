@@ -15,6 +15,7 @@ body {
   line-height: 1.5;
 }
 
+
 /* colors */
 :root {
   --primary: #1a6fa8;
@@ -299,6 +300,12 @@ h1, h2, h3, .logo-text {
   border-radius: 16px;
   padding: 30px 20px;
   text-align: center;
+  transition: all .3s linear;
+}
+.card:hover{
+  background-color: #b5cadc;
+  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.608);
+  transform:scale(1.2);
 }
 .card-icon {
   font-size: 44px;
@@ -396,6 +403,13 @@ h1, h2, h3, .logo-text {
   border-radius: 16px;
   padding: 25px;
   border: 1px solid var(--border);
+  transition: all .3s linear;
+
+}
+.testimonial-card:hover{
+  background-color: #b5cadc;
+  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.608);
+  transform:scale(1.2);
 }
 .stars {
   color: #f5b042;
