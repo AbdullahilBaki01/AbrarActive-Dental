@@ -241,6 +241,14 @@ h1, h2, h3, .logo-text {
   padding: 40px;
   text-align: center;
 }
+#herodr {
+    width: 350px;
+    height: 350px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 5px solid #1a6fa8;
+    margin-bottom: 1rem;  
+}
 .doctor-name {
   font-weight: bold;
   font-size: 18px;
@@ -562,6 +570,35 @@ footer {
   color: white;
   font-size: large;
 }
+
+/* footer-social */
+.footer-links ul li.social-links {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-top: 10px;
+}
+
+.social-links a {
+    color: white;
+    font-size: 18px;
+    transition: all 0.3s ease;
+    display: inline-block;
+    text-decoration: none;
+}
+
+.social-links a:hover {
+    color: #2ebfa5;
+    transform: translateY(-3px);
+}
+
+
+.social-links span {
+    color: #ccc;
+}
+
+
 .footer-bottom {
   border-top: 1px solid rgba(255,255,255,0.1);
   padding-top: 20px;
