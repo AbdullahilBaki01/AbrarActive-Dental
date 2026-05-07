@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Login | AbrarActive Dental</title>
+
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        .login-container {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #f0f9fe 0%, #fefbf5 100%);
+            padding: 20px;
+        }
+
+        .login-card {
+            background: white;
+            border-radius: 24px;
+            padding: 50px 40px;
+            width: 100%;
+            max-width: 450px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+            border: 1px solid #d6e8f5;
+        }
+
+        .login-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .login-header .logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .login-header .logo-icon {
+            width: 50px;
+            height: 50px;
+            background: #1a6fa8;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .login-header .logo-icon img {
+            width: 30px;
+            height: 30px;
+        }
+
+        .login-header .logo-text {
+            font-size: 24px;
+            color: #1c2b3a;
+        }
+
+        .login-header h2 {
+            font-size: 28px;
+            margin-bottom: 8px;
+        }
+
+        .login-header p {
+            color: #5a7085;
+            font-size: 14px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 13px;
+            font-weight: 600;
+            color: #5a7085;
+            margin-bottom: 8px;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 14px 16px;
+            border: 2px solid #d6e8f5;
+            border-radius: 12px;
+            font-size: 15px;
+            font-family: 'DM Sans', sans-serif;
+            transition: 0.2s;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: #1a6fa8;
+            background: #f4f9fd;
+        }
+
+        .error-message {
+            background: #fee;
+            color: #c00;
+            padding: 12px 16px;
+            border-radius: 10px;
+            font-size: 14px;
+            margin-bottom: 20px;
+            display: none;
+            border: 1px solid #fcc;
+        }
+
+        .error-message.show {
+            display: block;
+        }
+
+        .login-button {
+            width: 100%;
+            background: #1a6fa8;
+            color: white;
+            padding: 16px;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s;
+            font-family: 'DM Sans', sans-serif;
+        }
+
+        .login-button:hover {
+            background: #0f4d7a;
+        }
+
+        .login-footer {
+            text-align: center;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #d6e8f5;
+            font-size: 13px;
+            color: #5a7085;
+        }
+
+        .login-footer a {
+            color: #1a6fa8;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .login-footer a:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 480px) {
+            .login-card {
+                padding: 40px 25px;
+            }
+
+            .login-header h2 {
+                font-size: 24px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="login-container">
+        <div class="login-card">
+            <div class="login-header">
+                <div class="logo">
+                    <div class="logo-icon">
+                        <img src="./image/logo.png" alt="Logo">
+                    </div>
+                    <span class="logo-text">AbrerActive<span> Dental</span></span>
+                </div>
+                <h2>Admin Login</h2>
+                <p>Enter credentials to access appointments</p>
+            </div>
+
+            <form id="loginForm">
+                <div class="error-message" id="errorMessage">
+                    Invalid email or password. Please try again.
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Email Address</label>
+                    <input type="email" id="email" name="email" placeholder="admin@abrardental.com" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password" placeholder="Enter password" required>
+                </div>
+
+                <button type="submit" class="login-button">
+                    Login to Dashboard <i class="fas fa-arrow-right" style="margin-left: 8px;"></i>
+                </button>
+            </form>
+
+            <div class="login-footer">
+                <p>Authorized personnel only. All access is logged.</p>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+    <script>
+        // If already logged in, redirect to appointments
+        if (localStorage.getItem('isLoggedIn') === 'true') {
+            window.location.href = 'appointments.html';
+        }
+
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const email = document.getElementById('email').value.trim();
+            const password = document.getElementById('password').value;
+            const errorMsg = document.getElementById('errorMessage');
+
+            // Check credentials
+            const validEmail = 'admin@abrardental.com';
+            const validPassword = 'Dental@2026';
+
+            if (email === validEmail && password === validPassword) {
+                localStorage.setItem('isLoggedIn', 'true');
+                localStorage.setItem('userEmail', email);
+                window.location.href = 'appointments.html';
+            } else {
+                errorMsg.classList.add('show');
+                document.getElementById('password').value = '';
+            }
+        });
+    </script>
+
+</body>
+
+</html>

@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All Appointments | AbrarActive Dental</title>
+
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        .appointments-container {
+            max-width: 1400px;
+            margin: 100px auto 50px;
+            padding: 0 20px;
+        }
+
+        .appointments-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .appointments-header h2 {
+            font-size: 36px;
+            margin-bottom: 10px;
+        }
+
+        .appointments-header p {
+            color: #5a7085;
+            font-size: 16px;
+        }
+
+        .table-responsive {
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            overflow: hidden;
+            border: 1px solid #d6e8f5;
+        }
+
+        .appointments-table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 900px;
+        }
+
+        .appointments-table th {
+            background: #e8f4fd;
+            padding: 16px 14px;
+            text-align: left;
+            font-weight: 600;
+            color: #1a6fa8;
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            border-bottom: 2px solid #d6e8f5;
+        }
+
+        .appointments-table td {
+            padding: 16px 14px;
+            border-bottom: 1px solid #d6e8f5;
+            font-size: 14px;
+            color: #1c2b3a;
+            vertical-align: top;
+        }
+
+        .appointments-table tbody tr:hover {
+            background: #f4f9fd;
+        }
+
+        .appointments-table tbody tr:last-child td {
+            border-bottom: none;
+        }
+
+        .appointments-table tbody tr td:nth-child(4) {
+            font-weight: 600;
+            color: #1a6fa8;
+            white-space: nowrap;
+        }
+
+        .appointments-table tbody tr td:nth-child(6),
+        .appointments-table tbody tr td:nth-child(7) {
+            text-transform: capitalize;
+        }
+
+        .notes-cell {
+            max-width: 200px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .submitted-cell {
+            font-size: 12px;
+            color: #5a7085;
+            white-space: nowrap;
+        }
+
+        .back-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: #1a6fa8;
+            color: white;
+            padding: 10px 24px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            margin-bottom: 30px;
+            transition: background 0.2s;
+            border: none;
+            cursor: pointer;
+            font-size: 15px;
+        }
+
+        .back-button:hover {
+            background: #0f4d7a;
+        }
+
+        .no-appointments {
+            text-align: center;
+            padding: 80px 20px;
+            background: white;
+            border-radius: 16px;
+            border: 1px solid #d6e8f5;
+            color: #5a7085;
+        }
+
+        .no-appointments i {
+            font-size: 56px;
+            margin-bottom: 20px;
+            color: #d6e8f5;
+        }
+
+        .no-appointments h3 {
+            font-size: 20px;
+            margin-bottom: 8px;
+        }
+
+        /* Mobile responsive - horizontal scroll */
+        @media (max-width: 768px) {
+            .appointments-container {
+                margin-top: 80px;
+            }
+
+            .table-responsive {
+                border-radius: 12px;
+            }
+
+            .appointments-table th,
+            .appointments-table td {
+                padding: 12px 10px;
+                font-size: 13px;
+            }
+
+            .appointments-header h2 {
+                font-size: 28px;
+            }
+
+            .notes-cell {
+                max-width: 150px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .appointments-table th,
+            .appointments-table td {
+                padding: 10px 8px;
+                font-size: 12px;
+            }
+
+            .notes-cell {
+                max-width: 120px;
+            }
+
+            .back-button {
+                padding: 8px 20px;
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="container nav-container">
+            <a href="index.html" class="logo">
+                <div class="logo-icon">
+                    <img src="./image/logo.png" alt="Logo">
+                </div>
+                <span class="logo-text">AbrerActive<span> Dental</span></span>
+            </a>
+            <div class="nav-links">
+                <a href="index.html#home" class="nav-link">Home</a>
+                <a href="index.html#about" class="nav-link">About</a>
+                <a href="index.html#services" class="nav-link">Services</a>
+                <a href="index.html#appointment" class="nav-link">Appointment</a>
+                <a href="index.html#contact" class="nav-link">Contact</a>
+                <a href="appointments.html" class="nav-link">All Appointments</a>
+            </div>
+            <a href="index.html#appointment" class="btn btn-primary btn-small">📅 Book Now</a>
+        </div>
+    </nav>
+
+    <div class="appointments-container">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px;">
+            <button onclick="window.location.href='index.html'" class="back-button">
+                <i class="fas fa-arrow-left"></i> Back to Home
+            </button>
+            <button onclick="logout()" class="back-button" style="background: #c00;">
+                <i class="fas fa-sign-out-alt"></i> Logout
+            </button>
+        </div>
+
+        <div class="appointments-header">
+            <h2>All Appointments</h2>
+            <p>View all appointment requests</p>
+        </div>
+
+        <div class="table-responsive">
+            <table class="appointments-table">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Doctor</th>
+                        <th>Date</th>
+                        <th>Time</th>
+                        <th>Name</th>
+                        <th>Age</th>
+                        <th>Gender</th>
+                        <th>Email</th>
+                        <th>Phone</th>
+                        <th>Notes</th>
+                        <th>Submitted</th>
+                    </tr>
+                </thead>
+                <tbody id="appointmentsBody">
+                    <!-- Data loaded via JavaScript -->
+                </tbody>
+            </table>
+        </div>
+
+        <div id="noAppointments" class="no-appointments">
+            <i class="far fa-calendar-alt"></i>
+            <h3>No Appointments</h3>
+            <p>There are no appointment requests yet.</p>
+        </div>
+     </div>
+
+     <script src="script.js"></script>
+
+    <script>
+        // Check authentication on page load
+        function checkAuth() {
+            const isLoggedIn = localStorage.getItem('isLoggedIn');
+            if (isLoggedIn !== 'true') {
+                window.location.href = 'login.html';
+            }
+        }
+
+        // Logout function
+        function logout() {
+            localStorage.removeItem('isLoggedIn');
+            localStorage.removeItem('userEmail');
+            window.location.href = 'login.html';
+        }
+
+        // Run auth check immediately
+        checkAuth();
+    </script>
+
+ </body>
+
+</html>
