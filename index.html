@@ -19,27 +19,33 @@
 
 <body>
 
-    <!-- Navbar section Start here -->
-    <nav class="navbar">
-        <div class="container nav-container">
-            <a href="#" class="logo">
-                <div class="logo-icon">
-                    <img src="./image/logo.png" alt="Logo">
-                </div>
-                <span class="logo-text">AbrerActive<span> Dental</span></span>
-            </a>
-            <div class="nav-links">
+      <!-- Navbar section Start here -->
+      <nav class="navbar">
+          <div class="container nav-container">
+              <a href="#" class="logo">
+                  <div class="logo-icon">
+                      <img src="./image/logo.png" alt="Logo">
+                  </div>
+                  <span class="logo-text">AbrerActive<span> Dental</span></span>
+              </a>
+             <button class="mobile-menu-toggle" aria-label="Toggle menu" aria-expanded="false" aria-controls="primary-navigation">
+                  <span></span>
+                  <span></span>
+                  <span></span>
+              </button>
+              <div class="nav-overlay" aria-hidden="true"></div>
+            <div class="nav-links" id="primary-navigation" aria-hidden="true">
                 <a href="#home" class="nav-link">Home</a>
                 <a href="#about" class="nav-link">About</a>
                 <a href="#services" class="nav-link">Services</a>
-                <a href="#appointment" class="nav-link">Appointment</a>
                 <a href="#contact" class="nav-link">Contact</a>
                 <a href="login.html" class="nav-link">Admin</a>
+                <a href="#appointment" class="btn btn-primary btn-block btn-block-mobile">📅 Book Now</a>
             </div>
-            <a href="#appointment" class="btn btn-primary btn-small">📅 Book Now</a>
-        </div>
-    </nav>
-    <!-- Navbar section End   here -->
+             <a href="#appointment" class="btn btn-primary btn-small">📅 Book Now</a>
+          </div>
+      </nav>
+      <!-- Navbar section End   here -->
 
     <!-- Home section start here -->
     <section id="home" class="hero">

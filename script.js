@@ -1,13 +1,123 @@
-// Appointment form submission handler
+// Mobile menu toggle
+function initMobileMenu() {
+    const menuToggle = document.querySelector('.mobile-menu-toggle');
+    const navLinks = document.querySelector('.nav-links');
+    const overlay = document.querySelector('.nav-overlay');
+    
+    if (!menuToggle || !navLinks) return;
+    
+    function openMenu() {
+        menuToggle.classList.add('active');
+        menuToggle.setAttribute('aria-expanded', 'true');
+        navLinks.classList.add('active');
+        navLinks.setAttribute('aria-hidden', 'false');
+        if (overlay) {
+            overlay.classList.add('active');
+            overlay.setAttribute('aria-hidden', 'false');
+        }
+        document.body.style.overflow = 'hidden';
+    }
+    
+    function closeMenu() {
+        menuToggle.classList.remove('active');
+        menuToggle.setAttribute('aria-expanded', 'false');
+        navLinks.classList.remove('active');
+        navLinks.setAttribute('aria-hidden', 'true');
+        if (overlay) {
+            overlay.classList.remove('active');
+            overlay.setAttribute('aria-hidden', 'true');
+        }
+        document.body.style.overflow = '';
+    }
+    
+    menuToggle.addEventListener('click', function() {
+        if (menuToggle.classList.contains('active')) {
+            closeMenu();
+        } else {
+            openMenu();
+        }
+    });
+    
+    if (overlay) {
+        overlay.addEventListener('click', closeMenu);
+    }
+    
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') {
+            closeMenu();
+        }
+    });
+}
+
+// Global close menu for smooth scroll
+function closeMobileMenu() {
+    const menuToggle = document.querySelector('.mobile-menu-toggle');
+    const navLinks = document.querySelector('.nav-links');
+    const overlay = document.querySelector('.nav-overlay');
+    
+    if (menuToggle) {
+        menuToggle.classList.remove('active');
+        menuToggle.setAttribute('aria-expanded', 'false');
+    }
+    if (navLinks) {
+        navLinks.classList.remove('active');
+        navLinks.setAttribute('aria-hidden', 'true');
+    }
+    if (overlay) {
+        overlay.classList.remove('active');
+        overlay.setAttribute('aria-hidden', 'true');
+    }
+    document.body.style.overflow = '';
+}
+
+// Smooth scroll for anchor links
+function initSmoothScroll() {
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function(e) {
+            const targetId = this.getAttribute('href');
+            if (!targetId || targetId === '#') return;
+            
+            const targetElement = document.querySelector(targetId);
+            if (!targetElement) return;
+            
+            e.preventDefault();
+            
+            const menuToggle = document.querySelector('.mobile-menu-toggle');
+            const isMenuOpen = menuToggle && menuToggle.classList.contains('active');
+            
+            if (isMenuOpen) {
+                closeMobileMenu();
+                setTimeout(() => {
+                    scrollToTarget(targetElement);
+                }, 350);
+            } else {
+                scrollToTarget(targetElement);
+            }
+        });
+    });
+}
+
+function scrollToTarget(element) {
+    const navbar = document.querySelector('.navbar');
+    if (!navbar) return;
+    
+    const navbarHeight = navbar.offsetHeight;
+    const targetPosition = element.getBoundingClientRect().top + window.pageYOffset - navbarHeight - 20;
+    
+    window.scrollTo({
+        top: targetPosition,
+        behavior: 'smooth'
+    });
+}
+
+// Appointment form submission
 function initAppointmentForm() {
     const form = document.querySelector('#appointment form') || document.querySelector('form');
-    
     if (!form) return;
     
     form.addEventListener('submit', function(e) {
         e.preventDefault();
         
-        // Get form values
         const appointment = {
             doctor: form.querySelector('select').value,
             date: form.querySelector('input[type="date"]').value,
@@ -21,32 +131,23 @@ function initAppointmentForm() {
             submittedAt: new Date().toISOString()
         };
         
-        // Get existing appointments or initialize empty array
         let appointments = JSON.parse(localStorage.getItem('appointments')) || [];
-        
-        // Add new appointment
         appointments.push(appointment);
-        
-        // Save to localStorage
         localStorage.setItem('appointments', JSON.stringify(appointments));
         
-        // Show success message
         alert('Appointment request submitted successfully! We will contact you soon.');
-        
-        // Reset form
         form.reset();
     });
 }
 
-// Load and display appointments in table
+// Load appointments table
 function loadAppointments() {
     const appointments = JSON.parse(localStorage.getItem('appointments')) || [];
     const tbody = document.getElementById('appointmentsBody');
-    
     if (!tbody) return;
     
     const noAppointmentsDiv = document.getElementById('noAppointments');
-    const tableWrapper = document.querySelector('.table-responsive') || document.querySelector('.table-wrapper');
+    const tableWrapper = document.querySelector('.table-responsive');
     
     if (appointments.length === 0) {
         if (tableWrapper) tableWrapper.style.display = 'none';
@@ -83,13 +184,14 @@ function loadAppointments() {
             <td class="notes-cell" title="${appointment.notes || ''}">${appointment.notes || '-'}</td>
             <td class="submitted-cell">${formattedDate}</td>
         `;
-        
         tbody.appendChild(row);
     });
 }
 
-// Initialize on DOM load
+// Initialize all
 document.addEventListener('DOMContentLoaded', function() {
+    initMobileMenu();
+    initSmoothScroll();
     initAppointmentForm();
     loadAppointments();
 });
