@@ -183,9 +183,28 @@ function loadAppointments() {
             <td>${appointment.phone}</td>
             <td class="notes-cell" title="${appointment.notes || ''}">${appointment.notes || '-'}</td>
             <td class="submitted-cell">${formattedDate}</td>
+            <td><button onclick="deleteAppointment(${index})" style="background: #c00; color: white; border: none; padding: 6px 12px; border-radius: 15px; cursor: pointer; font-size: 12px;"><i class="fas fa-trash"></i> Delete</button></td>
         `;
         tbody.appendChild(row);
     });
+}
+
+// Delete appointment
+function deleteAppointment(index) {
+    if (confirm('Are you sure you want to delete this appointment?')) {
+        let appointments = JSON.parse(localStorage.getItem('appointments')) || [];
+        appointments.splice(index, 1);
+        localStorage.setItem('appointments', JSON.stringify(appointments));
+        loadAppointments();
+    }
+}
+
+// Clear all appointments
+function clearAllAppointments() {
+    if (confirm('Are you sure you want to delete all appointments? This cannot be undone.')) {
+        localStorage.removeItem('appointments');
+        loadAppointments();
+    }
 }
 
 // Initialize all
@@ -195,3 +214,7 @@ document.addEventListener('DOMContentLoaded', function() {
     initAppointmentForm();
     loadAppointments();
 });
+
+// Make functions globally available
+window.deleteAppointment = deleteAppointment;
+window.clearAllAppointments = clearAllAppointments;
