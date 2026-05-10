@@ -119,41 +119,60 @@ function initAppointmentForm() {
     const isEditing = form.dataset.editing === 'true';
     const editIndex = parseInt(form.dataset.editIndex) || -1;
     
-    form.addEventListener('submit', function(e) {
-        e.preventDefault();
-        
-        const appointment = {
-            doctor: form.querySelector('select').value,
-            date: form.querySelector('input[type="date"]').value,
-            time: form.querySelectorAll('select')[1].value,
-            name: form.querySelector('input[type="text"]').value,
-            age: form.querySelector('input[type="number"]').value,
-            gender: form.querySelectorAll('select')[2].value,
-            email: form.querySelector('input[type="email"]').value,
-            phone: form.querySelector('input[type="tel"]').value,
-            notes: form.querySelector('textarea').value,
-            submittedAt: new Date().toISOString(),
-            status: isEditing ? (JSON.parse(localStorage.getItem('appointments')) || [])[editIndex]?.status || 'pending' : 'pending'
-        };
-        
-        let appointments = JSON.parse(localStorage.getItem('appointments')) || [];
-        
-        if (isEditing && editIndex >= 0) {
-            // Update existing appointment
-            appointments[editIndex] = appointment;
-            form.dataset.editing = 'false';
-            delete form.dataset.editIndex;
-            alert('Appointment updated successfully!');
-        } else {
-            // Add new appointment
-            appointments.push(appointment);
-            alert('Appointment request submitted successfully! We will contact you soon.');
-        }
-        
-        localStorage.setItem('appointments', JSON.stringify(appointments));
-        form.reset();
-        loadAppointments();
-    });
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const doctor = form.querySelector('select').value;
+            const date = form.querySelector('input[type="date"]').value;
+            const time = form.querySelectorAll('select')[1].value;
+            const name = form.querySelector('input[type="text"]').value;
+            const age = form.querySelector('input[type="number"]').value;
+            const gender = form.querySelectorAll('select')[2].value;
+            const email = form.querySelector('input[type="email"]').value;
+            const phone = form.querySelector('input[type="tel"]').value;
+            
+            // Check if already 3 appointments exist for the same doctor, date, and time
+            let appointments = JSON.parse(localStorage.getItem('appointments')) || [];
+            const existingAppointments = appointments.filter(app => 
+                app.doctor === doctor && 
+                app.date === date && 
+                app.time === time
+            );
+            
+            if (!isEditing && existingAppointments.length >= 3) {
+                alert('Sorry, this time slot is already fully booked. Please select another time.');
+                return;
+            }
+            
+            const appointment = {
+                doctor: doctor,
+                date: date,
+                time: time,
+                name: name,
+                age: age,
+                gender: gender,
+                email: email,
+                phone: phone,
+                submittedAt: new Date().toISOString(),
+                status: isEditing ? (JSON.parse(localStorage.getItem('appointments')) || [])[editIndex]?.status || 'pending' : 'pending'
+            };
+            
+            if (isEditing && editIndex >= 0) {
+                // Update existing appointment
+                appointments[editIndex] = appointment;
+                form.dataset.editing = 'false';
+                delete form.dataset.editIndex;
+                alert('Appointment updated successfully!');
+            } else {
+                // Add new appointment
+                appointments.push(appointment);
+                alert('Appointment request submitted successfully! We will contact you soon.');
+            }
+            
+            localStorage.setItem('appointments', JSON.stringify(appointments));
+            form.reset();
+            loadAppointments();
+        });
 }
 
 // Load appointments table and update statistics
@@ -201,7 +220,6 @@ function loadAppointments() {
             <td class="hide-sm">${appointment.gender}</td>
             <td class="hide-md" title="${appointment.email}">${appointment.email}</td>
             <td class="hide-md">${appointment.phone}</td>
-            <td class="hide-md" title="${appointment.notes || ''}">${appointment.notes || '-'}</td>
             <td><span class="status-badge ${appointment.status}">${statusText}</span></td>
             <td class="hide-sm">${formattedDate}</td>
             <td>
@@ -357,7 +375,6 @@ function renderAppointmentsTable(appointments) {
             <td class="hide-sm">${appointment.gender}</td>
             <td class="hide-md" title="${appointment.email}">${appointment.email}</td>
             <td class="hide-md">${appointment.phone}</td>
-            <td class="hide-md" title="${appointment.notes || ''}">${appointment.notes || '-'}</td>
             <td><span class="status-badge ${appointment.status}">${statusText}</span></td>
             <td class="hide-sm">${formattedDate}</td>
             <td>
