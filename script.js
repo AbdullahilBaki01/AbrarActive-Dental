@@ -126,12 +126,27 @@ function initAppointmentForm() {
             const date = form.querySelector('input[type="date"]').value;
             const time = form.querySelectorAll('select')[1].value;
             const name = form.querySelector('input[type="text"]').value;
-            const age = form.querySelector('input[type="number"]').value;
+            const ageInput = form.querySelector('input[type="number"]');
+            const age = ageInput.value;
             const gender = form.querySelectorAll('select')[2].value;
             const email = form.querySelector('input[type="email"]').value;
             const phone = form.querySelector('input[type="tel"]').value;
             
-            // Check if already 3 appointments exist for the same doctor, date, and time
+            // Validate age
+            if (age === '') {
+                alert('Please enter your age');
+                ageInput.focus();
+                return;
+            }
+            
+            const ageNum = parseInt(age);
+            if (isNaN(ageNum) || ageNum < 0 || ageNum > 120) {
+                alert('Please enter a valid age between 0 and 120');
+                ageInput.focus();
+                return;
+            }
+            
+            // Check if already 2 appointments exist for the same doctor, date, and time
             let appointments = JSON.parse(localStorage.getItem('appointments')) || [];
             const existingAppointments = appointments.filter(app => 
                 app.doctor === doctor && 
@@ -139,7 +154,7 @@ function initAppointmentForm() {
                 app.time === time
             );
             
-            if (!isEditing && existingAppointments.length >= 3) {
+            if (!isEditing && existingAppointments.length >= 2) {
                 alert('Sorry, this time slot is already fully booked. Please select another time.');
                 return;
             }
